@@ -1,7 +1,8 @@
 const Discord = require(`discord.js`); // discord.js를 불러옴
+const config = require('./config.json'); // token
 const client = new Discord.Client(); // 새로운 디스코드 클라이언트를 만듬
 
-client.login(`OTI4NzAzNjE1Nzk3OTY4OTM4.YdcopA.I9GLSpvbZPXt-wBlUjsSsh2bVfE`);
+client.login(config.token);
 
 const fs = require('fs');
 const prefix = '/';
@@ -28,14 +29,14 @@ client.on('message', msg => {
     if (msg.content.slice(0, prefix.length) !== prefix) return;
     // 명령어 prefix 아닌것 예외처리
 
-    const args = msg.content.slice(prefix.length).trim().split(/ +/g);
+    const args = msg.content.slice(prefix.length).trim();
     const command = args.shift().toLowerCase();
 
     let cmd = client.commands.get(command);
     //get는 컬렉션 내에 해당 key 값을 가진 데이터가 없으면 falsy 값을 반환하므로 부분적으로 Collection#has처럼 사용할수 있습니다.
 
     if (cmd) cmd.run(client, msg, args);
-})
+});
 
 // 이 이벤트는 봇이 로그인 되고 한번만 실행될것입니다
 client.once('ready', () => {
