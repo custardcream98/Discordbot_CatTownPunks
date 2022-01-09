@@ -1,5 +1,14 @@
 const Discord = require("discord.js");
-const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS] });
+const client = new Discord.Client({
+    intents: [
+        "GUILDS",
+        "GUILD_MESSAGES",
+        "DIRECT_MESSAGES"
+    ],
+    partials: [
+        "CHANNEL"
+    ]
+});
 const fs = require('fs')
 client.login(process.env.TOKEN);// 토큰 수정
 
