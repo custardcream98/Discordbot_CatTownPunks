@@ -10,7 +10,8 @@ const client = new Discord.Client({
     ]
 });
 const fs = require('fs')
-client.login(process.env.TOKEN);// 토큰 수정
+const { token, clientId } = require('./config.json');
+client.login(token);
 
 client.on("ready", () => {
     console.log(`${client.user.tag} 봇에 로그인 하였습니다!`);

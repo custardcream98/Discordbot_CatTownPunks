@@ -29,10 +29,6 @@
     "discord",
     "javascript"
   ],
-  "engines": {
-    "node": "v16.13.1",
-    "npm": "8.1.2"
-  },
   "bugs": {
     "url": "https://github.com/custardcream98/Discordbot_CatTownPunks/issues"
   },

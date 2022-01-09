@@ -29,12 +29,14 @@ const rest = new REST({ version: '9' }).setToken(token);
         //     Routes.applicationGuildCommands(clientId, "889636404571828304"),
         //     { body: commands },
         // );
-
-        // test server ID:  "928705916604416041"
         await rest.put(
-            Routes.applicationCommands(clientId),
+            Routes.applicationGuildCommands(clientId, "928705916604416041"), // TEST SERVER
             { body: commands },
         );
+        // await rest.put(
+        //     Routes.applicationCommands(clientId),
+        //     { body: commands },
+        // );
 
         console.log('Successfully reloaded application (/) commands.');
     } catch (error) {
