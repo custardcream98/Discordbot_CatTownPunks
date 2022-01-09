@@ -24,6 +24,10 @@
     "type": "git",
     "url": "git+https://github.com/custardcream98/Discordbot_CatTownPunks.git"
   },
+  "engines": {
+    "node": "v16.13.1",
+    "npm": "8.1.2"
+  },
   "keywords": [
     "discord",
     "javascript"
