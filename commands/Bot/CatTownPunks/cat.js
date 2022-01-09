@@ -52,13 +52,13 @@ async function makeEmbedMsg(cat) {
         .setThumbnail(cat.cat_img)
         .addFields(
             { name: 'Rarity', value: cat.Rarity },
-            { name: 'Background', value: cat.Background, inline: false },
+            { name: 'Background', value: cat.Background, inline: true },
             { name: 'Shape', value: cat.Shape, inline: true },
             { name: 'Neck', value: cat.Neck, inline: false },
             { name: 'Face', value: cat.Face, inline: true },
-            { name: 'Eyes', value: cat.Eyes, inline: false },
-            { name: 'Hat', value: cat.Hat, inline: true },
-            { name: 'Hand', value: cat.Hand, inline: false },
+            { name: 'Eyes', value: cat.Eyes, inline: true },
+            { name: 'Hat', value: cat.Hat, inline: false },
+            { name: 'Hand', value: cat.Hand, inline: true },
             { name: 'Handing', value: cat.Handing, inline: true }
         );
     return embedMsg;
