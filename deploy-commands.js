@@ -25,6 +25,12 @@ const rest = new REST({ version: '9' }).setToken(token);
     try {
         console.log('Started refreshing application (/) commands.');
 
+        // await rest.put(
+        //     Routes.applicationGuildCommands(clientId, "889636404571828304"),
+        //     { body: commands },
+        // );
+
+        // test server ID:  "928705916604416041"
         await rest.put(
             Routes.applicationCommands(clientId),
             { body: commands },

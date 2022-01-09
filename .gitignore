@@ -1,3 +1,4 @@
 config.json
 /node_modules
-/commands/Bot/test/
+/commands/Bot/test
+*.env
