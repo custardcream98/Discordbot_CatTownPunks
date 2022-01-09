@@ -1,8 +1,9 @@
 const Discord = require("discord.js");
 const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS] });
 const fs = require('fs')
-const { token, clientId } = require('./config.json');
-client.login(token);
+// const { token, clientId } = require('./config.json');
+// client.login(token);
+client.login(process.env.TOKEN);// 토큰 수정
 
 client.on("ready", () => {
     console.log(`${client.user.tag} 봇에 로그인 하였습니다!`);
