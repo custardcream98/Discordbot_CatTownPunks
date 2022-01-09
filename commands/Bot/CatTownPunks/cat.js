@@ -54,10 +54,10 @@ async function makeEmbedMsg(cat) {
             { name: 'Rarity', value: cat.Rarity },
             { name: 'Background', value: cat.Background, inline: true },
             { name: 'Shape', value: cat.Shape, inline: true },
-            { name: 'Neck', value: cat.Neck, inline: false },
+            { name: 'Neck', value: cat.Neck, inline: true },
             { name: 'Face', value: cat.Face, inline: true },
             { name: 'Eyes', value: cat.Eyes, inline: true },
-            { name: 'Hat', value: cat.Hat, inline: false },
+            { name: 'Hat', value: cat.Hat, inline: true },
             { name: 'Hand', value: cat.Hand, inline: true },
             { name: 'Handing', value: cat.Handing, inline: true }
         );
