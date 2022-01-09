@@ -1,11 +1,15 @@
 const axios = require('axios');
-const fs = require('fs');
+const Discord = require('discord.js');
+const { MessageActionRow, MessageButton, MessageEmbed } = require('discord.js');
 
 async function FindMyCat(cat_num) {
     var result = {};
-    let parsed = await axios.get(`https://token.cattownpunks.com/k-cat-town-punks/${cat_num}`);
+    let parsed = await axios.get(`https://token.cattownpunks.com/k-cat-town-punks/${cat_num}`)
+        .catch(error => {
+            console.log(error);
+            return;
+        });
     parsed = parsed.data;
-    console.log(parsed);
 
     result['isOK'] = true;
     var attr = parsed.attributes;
@@ -31,7 +35,7 @@ async function FindMyCat(cat_num) {
         }
     }
 
-    result['cat_name'] = parsed['name'];
+    result['cat_name'] = parseInt(parsed['name'].split('#')[1]) == cat_num ? parsed['name'] : `${parsed['name']} #${cat_num}`;
     result['cat_img'] = parsed['image'];
     result['opensea_url'] = "https://opensea.io/assets/klaytn/0x3bb88f83b6b9c6286daa7dd2d1412ed2a5510c90/" + String(cat_num);
     result['cat_profile'] = "https://cattownpunks.com/cat-profile/" + String(cat_num);
@@ -39,20 +43,72 @@ async function FindMyCat(cat_num) {
     return result;
 }
 
-exports.config = {
-    name: 'cat',
-    // aliases: ['aliases', 'aliases1', 'aliases2'], // 추가로 명령어 지정 가능
-    category: ['bot'],
-    des: ['Find Your Cat!'], // 명령어 설명
-    use: ['/cat (your cat number) ex: /cat 18602'] // 추후 help 명령어 추가 예정
+async function makeEmbedMsg(cat) {
+    const mint = '#9effdf';
+
+    let embedMsg = new MessageEmbed()
+        .setTitle(cat.cat_name)
+        .setColor(mint)
+        .setURL(cat.cat_profile)
+        .setThumbnail(cat.cat_img)
+        .addFields(
+            { name: 'Rarity', value: cat.Rarity },
+            { name: 'Background', value: cat.Background, inline: true },
+            { name: 'Shape', value: cat.Shape, inline: true },
+            { name: 'Neck', value: cat.Neck, inline: true },
+            { name: 'Face', value: cat.Face, inline: true },
+            { name: 'Eyes', value: cat.Eyes, inline: true },
+            { name: 'Hat', value: cat.Hat, inline: true },
+            { name: 'Hand', value: cat.Hand, inline: true },
+            { name: 'Handing', value: cat.Handing, inline: true }
+        );
+    return embedMsg;
 }
 
-exports.run = async (client, msg, args) => {
-    if (!args[0] || isNaN(args[0])) return msg.reply("❎ Please type the cat's number");
+async function makeBtn(cat) {
+    const row = new MessageActionRow()
+        .addComponents(
+            new MessageButton()
+                .setStyle('LINK')
+                .setLabel('📒 Cat Profile')
+                .setURL(cat.cat_profile)
+        )
+        .addComponents(
+            new MessageButton()
+                .setStyle('LINK')
+                .setLabel('⚓ OpenSea Profile')
+                .setURL(cat.opensea_url)
+        );
+    return row;
+}
 
-    let cat_num = args[0];
-    let cat = await FindMyCat(cat_num);
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
-    msg.reply(cat.cat_name);
-    msg.channel.send(cat.cat_img);
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('cat')
+        .setDescription('Find Your Cat!')
+        .addIntegerOption(option =>
+            option
+                .setName('cat-number')
+                .setDescription('The number of your Cat!')
+                .setRequired(true)
+                .setMaxValue(20000)
+                .setMinValue(1)
+        ),
+    async execute(interaction) {
+        await catCommand(interaction);
+    },
 };
+
+async function catCommand(interaction) {
+    let cat_num = interaction.options.getInteger('cat-number');
+    let cat = await FindMyCat(cat_num)
+        .catch(error => console.log(error));
+    console.log(`${interaction.user.username} triggered catCommand : ${cat.cat_name}`);
+
+    let embed = await makeEmbedMsg(cat);
+    let row = await makeBtn(cat);
+
+    await interaction.reply({ embeds: [embed], components: [row] });
+}
