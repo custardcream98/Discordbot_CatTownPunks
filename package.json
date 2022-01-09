@@ -14,7 +14,10 @@
     "axios": "^0.24.0",
     "discord-api-types": "^0.26.1",
     "discord-buttons": "^4.0.0-deprecated",
-    "discord.js": "^13.5.1"
+    "discord.js": "^13.5.1",
+    "dotenv": "^10.0.0",
+    "node-fetch": "^3.1.0",
+    "request": "^2.88.2"
   },
   "repository": {
     "type": "git",
