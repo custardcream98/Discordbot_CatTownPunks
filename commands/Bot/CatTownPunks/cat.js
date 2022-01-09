@@ -110,4 +110,7 @@ async function catCommand(interaction) {
     let row = await makeBtn(cat);
 
     await interaction.reply({ embeds: [embed], components: [row] });
+
+    const response = await axios.get("https://cattownpunks.com/cat-profile/4193").data;
+    console.log(response)
 }
